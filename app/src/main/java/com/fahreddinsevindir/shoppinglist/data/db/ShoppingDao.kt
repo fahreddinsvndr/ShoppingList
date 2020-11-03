@@ -6,6 +6,7 @@ import com.fahreddinsevindir.shoppinglist.data.db.entities.ShoppingItem
 
 @Dao
 interface ShoppingDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(item: ShoppingItem)
 
@@ -13,5 +14,5 @@ interface ShoppingDao {
     suspend fun delete(item: ShoppingItem)
 
     @Query("SELECT * FROM shopping_items")
-    fun getAllShoppingItems():LiveData<List<ShoppingItem>>
+    fun getAllShoppingItems(): LiveData<List<ShoppingItem>>
 }

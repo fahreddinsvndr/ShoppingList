@@ -10,25 +10,25 @@ import com.fahreddinsevindir.shoppinglist.data.db.entities.ShoppingItem
     entities = [ShoppingItem::class],
     version = 1
 )
-abstract class ShoppingDatabase : RoomDatabase() {
+abstract class ShoppingDatabase: RoomDatabase() {
+
     abstract fun getShoppingDao(): ShoppingDao
 
-    companion object{
+    companion object {
         @Volatile
         private var instance: ShoppingDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance
-            ?: synchronized(LOCK){
-            instance
-                ?: createDatabase(
-                    context
-                )
-                    .also { instance = it }
-        }
+            ?: synchronized(LOCK) {
+                instance
+                    ?: createDatabase(
+                        context
+                    ).also { instance = it }
+            }
 
         private fun createDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
-            ShoppingDatabase::class.java,"ShoppingDb.db").build()
+                ShoppingDatabase::class.java, "ShoppingDB.db").build()
     }
 }
